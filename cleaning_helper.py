@@ -9,8 +9,8 @@ def fix_embarked(dataframe):
 
 
 # cutting age variable
-def cut_age_variable(dataframe):
-    cuts = pd.cut(dataframe['Age'], bins=10)
+def cut_age_variable(dataframe, bins_, str_):
+    cuts = pd.cut(dataframe[str_], bins=bins_)
     # categorizing the cuts variables
     hash_map = {}
     index_ = 0
@@ -19,13 +19,12 @@ def cut_age_variable(dataframe):
             hash_map[e] = index_
             index_ += 1
 
-    
     cat_variable = []
-    for c,a in zip(cuts, dataframe['Age']):
-        if hash_map[c] != 3:
-            cat_variable.append(hash_map[c])
-        else:
+    for c,a in zip(cuts, dataframe[str_]):
+        if np.isnan(a):
             cat_variable.append(np.nan)
+        else:
+            cat_variable.append(hash_map[c])
 
     return pd.Series(cat_variable)
 
@@ -39,24 +38,33 @@ def create_distribution_list(ans):
     return distribution_list
 
 
-def fix_age(dataframe, distribution_list, ans):
-    dataframe['dis_age'] = ans
-    for e in dataframe[dataframe['dis_age'].isnull()].index:
-        dataframe.loc[e, 'dis_age'] = np.random.choice(distribution_list, replace=False)
-    dataframe.dis_age = dataframe.dis_age.astype(int)
+def fix_age(dataframe, distribution_list, ans, str_):
+    dataframe['dis_'+str_] = ans
+    for e in dataframe[dataframe['dis_'+str_].isnull()].index:
+        dataframe.loc[e, 'dis_'+str_] = np.random.choice(distribution_list, replace=False)
+    dataframe['dis_'+str_] = dataframe['dis_'+str_].astype(int)
 
 
-# categorizing the age field. Continuous to Categorical
-def age_to_categorical(dataframe):
-    cuts = pd.cut(dataframe['Age'], bins=10)
+def cont_discrete(dataframe, bins_, str_):
+    # cutting the age_variable
+    ans = cut_age_variable(dataframe, bins_, str_)
+    # creating the distribution list
+    dist_list = create_distribution_list(ans)
+    # populating the Age NaNs
+    fix_age(dataframe, dist_list, ans, str_)
 
 
-    # replacing the intervals with respective discrete values.
-    # fixing the NaNs.
+def discretize_field(dataframe, str_):
+    series = dataframe[str_]
+    u_values = series.unique()
+    h_map = {}
+    counter = 0
+    for u in u_values:
+        if u not in h_map:
+            h_map[u] = counter
+            counter += 1
+    new_list = list()
+    for each in dataframe.Embarked:
+        new_list.append(h_map[each])
 
-    new_list = []
-    for e in cuts:
-        new_list.append(hash_map[e])
-    return pd.Series(new_list)
-
-
+    dataframe['dis_'+str_] = pd.Series(new_list)
