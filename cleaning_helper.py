@@ -64,7 +64,34 @@ def discretize_field(dataframe, str_):
             h_map[u] = counter
             counter += 1
     new_list = list()
-    for each in dataframe.Embarked:
+    for each in dataframe[str_]:
         new_list.append(h_map[each])
 
     dataframe['dis_'+str_] = pd.Series(new_list)
+
+
+# using information from the names field.
+def working_with_names(dataframe):
+    ex_series = dataframe.Name.str.extract("([A-Za-z]*\.)")
+    ls_ = []
+    female_ = set(['Miss.', 'Mrs.', 'Ms.'])
+    male_ = set(['Mr.'])
+    child_ = set(['Master.'])
+    imp_people = set(["Dr.", "Rev.", "Col.", "Mlle.", "Major.", "Jonkheer.", "Capt.", "Sir.", "Don.", "Countess.", "Lady.", "Mme."])
+
+    for e in ex_series:
+        if e in female_:
+            ls_.append(0)
+        elif e in male_:
+            ls_.append(1)
+        elif e in child_:
+            ls_.append(2)
+        elif e in imp_people:
+            ls_.append(3)
+
+    dataframe['dis_name'] = pd.Series(ls_)
+
+
+# using information from the names field.
+def have_siblings_not(dataframe):
+    
