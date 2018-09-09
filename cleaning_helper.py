@@ -94,4 +94,13 @@ def working_with_names(dataframe):
 
 # using information from the names field.
 def have_siblings_not(dataframe):
+    ls_ = []
+
+    for s,p in zip(dataframe['SibSp'], dataframe['Parch']):
+        if (s+p) > 0:
+            ls_.append(1)
+        else:
+            ls_.append(0)
+
+    dataframe['hasSomeOne'] = pd.Series(ls_)
     
