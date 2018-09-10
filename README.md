@@ -9,3 +9,8 @@ This is analysis and modelling of the famous Titanic Data Set from Kaggle.
 
 <br> Please feel free to fork and contribute.
 
+<br> My take aways from this project:
+1. Reiterating the basic strategy of working through a Data Science Project.
+2. Importance of carrying out exhaustive analysis.
+3. Use intuition and understanding gained during analysis to mold the data. This is crucial since you would want your molded data to still be representative of the real data set.
+4. Use intuition to decide on the best suitable Machine Learning Algorithms and employ them using Scikit Learn Pipelines.
