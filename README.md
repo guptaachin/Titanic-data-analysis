@@ -6,5 +6,5 @@ This is analysis and modelling of the famous Titanic Data Set from Kaggle.
 2. [jupyter notebook](https://github.com/gauscian/Titanic-data-analysis/blob/master/jupyter-nb.ipynb)
 3. [SPAP](https://github.com/gauscian/Titanic-data-analysis/blob/master/%5BSPAP%5D%20Titanic%20Data%20Set.png)
 
-<br> Please feel free to clone and contribute.
+<br> Please feel free to fork and contribute.
 
