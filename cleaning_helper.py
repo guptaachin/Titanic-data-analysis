@@ -92,7 +92,7 @@ def working_with_names(dataframe):
     dataframe['dis_name'] = pd.Series(ls_)
 
 
-# using information from the names field.
+# using information from the Siblings and Parch to create a single field
 def have_siblings_not(dataframe):
     ls_ = []
 
