@@ -103,4 +103,3 @@ def have_siblings_not(dataframe):
             ls_.append(0)
 
     dataframe['hasSomeOne'] = pd.Series(ls_)
-    
