@@ -107,3 +107,22 @@ def have_siblings_not(dataframe):
             ls_.append(0)
 
     dataframe['hasSomeOne'] = pd.Series(ls_)
+
+
+def complete_pipeline(dataframe):
+    dataframe.drop(labels=['Cabin', 'Ticket', 'PassengerId'], axis=1, inplace=True)
+
+    cont_discrete(dataframe, 10, 'Age')
+    cont_discrete(dataframe, 23, 'Fare')
+    dataframe.drop(['Age', 'Fare'], inplace=True, axis=1)
+
+    discretize_field(dataframe, 'Embarked')
+    discretize_field(dataframe, 'Sex')
+    dataframe.drop(['Embarked', 'Sex'], axis=1,inplace=True)
+
+    working_with_names(dataframe)
+    df_test['dis_name'] = df_test['dis_name'].astype(int)
+    dataframe.drop(['Name'], axis=1, inplace=True)
+
+    have_siblings_not(dataframe)
+    dataframe.drop(['SibSp','Parch'], axis=1, inplace=True)
