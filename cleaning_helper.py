@@ -73,13 +73,16 @@ def discretize_field(dataframe, str_):
 # using information from the names field.
 def working_with_names(dataframe):
     ex_series = dataframe.Name.str.extract("([A-Za-z]*\.)")
+
     ls_ = []
+
+    # based in the value counts obervations
     female_ = set(['Miss.', 'Mrs.', 'Ms.'])
     male_ = set(['Mr.'])
     child_ = set(['Master.'])
     imp_people = set(["Dr.", "Rev.", "Col.", "Mlle.", "Major.", "Jonkheer.", "Capt.", "Sir.", "Don.", "Countess.", "Lady.", "Mme."])
 
-    for e in ex_series:
+    for e in ex_series[0]:
         if e in female_:
             ls_.append(0)
         elif e in male_:
@@ -88,6 +91,7 @@ def working_with_names(dataframe):
             ls_.append(2)
         elif e in imp_people:
             ls_.append(3)
+
 
     dataframe['dis_name'] = pd.Series(ls_)
 
