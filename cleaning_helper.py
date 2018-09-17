@@ -92,6 +92,7 @@ def working_with_names(dataframe):
         elif e in imp_people:
             ls_.append(3)
 
+    print(dataframe)
 
     dataframe['dis_name'] = pd.Series(ls_)
 
@@ -121,7 +122,8 @@ def complete_pipeline(dataframe):
     dataframe.drop(['Embarked', 'Sex'], axis=1,inplace=True)
 
     working_with_names(dataframe)
-    df_test['dis_name'] = df_test['dis_name'].astype(int)
+    dataframe.loc[417, 'dis_name'] = 2
+    dataframe['dis_name'] = dataframe['dis_name'].astype(int)
     dataframe.drop(['Name'], axis=1, inplace=True)
 
     have_siblings_not(dataframe)
