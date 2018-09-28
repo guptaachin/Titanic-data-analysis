@@ -128,3 +128,26 @@ def complete_pipeline(dataframe):
 
     have_siblings_not(dataframe)
     dataframe.drop(['SibSp','Parch'], axis=1, inplace=True)
+    
+    
+# general methods for calculating the precision and recall
+def calculate_precision(conf_matrix):
+    conf_matrix = np.array(conf_matrix)
+    prec_ = 0
+    n = len(conf_matrix)
+    for col in range(n):
+        prec_ += (conf_matrix[col][col] / (np.sum(conf_matrix[:,col])))
+    prec_ /= n
+    return prec_
+
+def calculate_recall(conf_matrix):
+    conf_matrix = np.array(conf_matrix)
+    rec_ = 0
+    n = len(conf_matrix)
+    for col in range(n):
+        rec_ += (conf_matrix[col][col] / (np.sum(conf_matrix[col, :])))
+    rec_ /= n
+    return rec_
+
+def calculate_f1_score(prec, recall):
+    return ((2*prec*recall)/(prec+recall))
